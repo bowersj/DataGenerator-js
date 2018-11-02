@@ -25,6 +25,11 @@ if( cluster.isMaster ){
     for( let i = 0; i < cores; i++ ){
         cluster.fork();
     }
+
+    // send a message to each worker
+    Object.values(cluster.workers).forEach(worker => {
+        worker.send({msg: "Hi there mister worker", id: Math.floor(Math.random()*100000)});
+    });
 } else {
     require('./worker.js')
 }

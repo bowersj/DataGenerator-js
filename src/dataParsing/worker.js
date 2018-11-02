@@ -11,3 +11,7 @@
 
 
 console.log('Hi there I am a worker');
+
+process.on('message', msg => {
+    console.log(`Message from master: ${JSON.stringify(msg)}`);
+});
