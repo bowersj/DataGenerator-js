@@ -1,6 +1,6 @@
 /*
  *
- * genArrayOfPaths.js
+ * genArrayOfPaths-rawData.js
  *
  * Purpose
  * To generate a json file containing an array of paths to the text data
@@ -22,8 +22,8 @@
 const fs = require( 'fs' );
 
 const persistArrayOfPaths = function( pathToData, pathToWriteTo){
-    if(typeof pathToData !== 'string')    throw TypeError('[genArrayOfPaths.js genArrayOfPaths] pathToData must be a string');
-    if(typeof pathToWriteTo !== 'string') throw TypeError('[genArrayOfPaths.js genArrayOfPaths] pathToWriteTo must be a string');
+    if(typeof pathToData !== 'string')    throw TypeError('[genArrayOfPaths-rawData.js genArrayOfPaths] pathToData must be a string');
+    if(typeof pathToWriteTo !== 'string') throw TypeError('[genArrayOfPaths-rawData.js genArrayOfPaths] pathToWriteTo must be a string');
 
     function buildArrayOfPaths( err, directory ){
         if(err)throw err;
@@ -37,7 +37,31 @@ const persistArrayOfPaths = function( pathToData, pathToWriteTo){
         return path;
     }
 
-    fs.readdir( pathToData, ( err, files ) => {
+    const walk = function(dir, done) {
+        let results = [];
+        fs.readdir(dir, function(err, list) {
+            if (err) return done(err);
+            let pending = list.length;
+            if (!pending) return done(null, results);
+            list.forEach(function(file) {
+                file = path.resolve(dir, file);
+                fs.stat(file, function(err, stat) {
+                    if (stat && stat.isDirectory()) {
+                        walk(file, function(err, res) {
+                            results = results.concat(res);
+                            if (!--pending) done(null, results);
+                        });
+                    } else {
+                        results.push(file);
+                        if (!--pending) done(null, results);
+                    }
+                });
+            });
+        });
+    };
+
+
+    walk( pathToData, ( err, files ) => {
         if(err) throw err;
 
         let paths = buildArrayOfPaths( err, files );
