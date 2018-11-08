@@ -1,0 +1,36 @@
+{
+  "name": "fake_data_generator",
+  "version": "1.0.0",
+  "description": "This is a privat repository for generating fake data based on a schema. It incorperates nodes sluster module to make it faster too.",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "csvtojson": "^2.0.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bowersj/DataGenerator.git"
+  },
+  "keywords": [
+    "data",
+    "generator",
+    "data",
+    "text",
+    "search",
+    "fake",
+    "data",
+    "search"
+  ],
+  "author": "Joshua Bowers",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/bowersj/DataGenerator/issues"
+  },
+  "homepage": "https://github.com/bowersj/DataGenerator#readme"
+}
