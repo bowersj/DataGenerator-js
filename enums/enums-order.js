@@ -19,5 +19,5 @@ module.exports = {
     "shipmentMethod": [ "UPS Standard", "UPS Overnight", "FedEx 2 day", "FedEx Overnight", "USPS 2 day air", "USPS 1 day air", "USPS Overnight", "USPS Priority" ],
     "productOrderStatus": status,
     "productCondition": [ "Like New", "Very Good", "Good", "Acceptable" ],
-    "paymentMethodType": [ "Credit card", "Bank Account", "Cash", "Check" ]
+    "paymentMethodType": [ "Credit card", "Bank Account", "Cash", "Check", "Guest Checkout" ]
 };

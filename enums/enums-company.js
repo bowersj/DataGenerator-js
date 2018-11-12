@@ -10,7 +10,7 @@
 let docHistory = require( './enums-metadata.js' );
 let order = require( './enums-order.js' );
 
-let purpose = [ "Personal", "Company", "family", "spam" ];
+let purpose = [ "Primary", "Sales", "Shipping", "Support", "Customer Service", "Main Office", "Purchasing", "HR", "IT", "Help Desk" ];
 let status = [ "Active", "Inactive" ];
 
 module.exports = {
@@ -18,8 +18,9 @@ module.exports = {
     "companyStatus": status,
     "addressPurpose": purpose,
     "emailPurpose": purpose,
-    "paymentMethodType": order.paymentMethodType,
-    "websitePurpose": [ "companyWebsite", "personalWebsite" ],
+    "phonePurpose": purpose,
+    "paymentMethodType": [ "Credit card", "Bank Account", "Cash", "Check" ],
+    "websitePurpose": purpose,
     "supplierStatus": status,
     "sellerStatus" : status
 };
