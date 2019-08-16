@@ -1,4 +1,4 @@
-/*
+/**
  * dataFunctions.js
  *
  * Purpose
@@ -29,7 +29,7 @@ const {DateTime} = require('luxon');
 const {Duration} = require('luxon');
 
 
-/*
+/**
  * Helper Functions
  *
  * Credit for Regex.
@@ -64,7 +64,7 @@ function getCompanyInformalName( companyName ){
 // console.log( getCompanyInformalName( "STYLE&GRAPHICS" ) );
 
 
-/*
+/**
  * isJson
  *
  * Documentation
@@ -102,7 +102,7 @@ function isJson(item) {
 // console.log(isJson( Symbol() ));
 
 
-/*
+/**
  *
  * getRandomNums
  *
@@ -301,7 +301,7 @@ function getRandomNums( numOfInts, options={} ){
 // console.log(getRandomNums(3, { returnInteger: false, scale: 50 }));
 
 
-/*
+/**
  *
  * ucFirst
  *
@@ -333,7 +333,7 @@ function ucFirst( str ){
 // console.log(ucFirst('mcCormic'));
 
 
-/*
+/**
  *
  * genSchemaReference
  *
@@ -368,7 +368,7 @@ function genSchemaReference( obj={} ){
 // console.log( JSON.stringify( genSchemaReference({ version: 39 }) ) );
 
 
-/*
+/**
  *
  * genPersonNameInfo
  *
@@ -501,7 +501,7 @@ function genPersonNameInfo(obj={}){
 // console.log( genPersonNameInfo({ id: 123456, gender:"male", data:{ maleFirstNames:[ "Joe" ], femaleFirstNames:[ "Ana" ], lastNames:[ "Smith" ] }, maidenName:true, middleName:true }) );
 
 
-/*
+/**
  *
  * genPaymentMethod
  *
@@ -584,8 +584,61 @@ function genPaymentMethod(obj={}){
 // );
 
 
-// genCreditCardNumber
-// TODO: need to account for the different formats based on the type of credit card
+/**
+ *@function genCreditCardNumber
+ * @version 1.0.1
+ * @private
+ *
+ * TODO: need to account for the different formats based on the type of credit card
+ *
+ * Credit card formats
+ *  See https://www.freeformatter.com/credit-card-number-generator-validator.html#cardFormats
+ *
+ *  American Express
+ *  Starts with 34 OR 37
+ *  Length 15
+ *
+ * Diners Club - carte Blanche
+ *  Starts with 300, 301, 302, 303, 304, OR 305
+ *  Length 14
+ *
+ * Diners Club - International
+ *  Starts with 36
+ *  Length 14
+ *
+ * Diners Club - USA & Canada
+ *  Starts with 54
+ *  Length 16
+ *
+ * Discover
+ *  Starts with 6011, 622126 to 622925, 644, 645, 646, 647, 648, 649, OR 65
+ *  length 16 - 19
+ *
+ * InstaPayment
+ *  Starts with 637, 638, OR 639
+ *  Length 16
+ *
+ * JCB
+ *  Starts with 3528 to 3589
+ *  length 16 - 19
+ *
+ * Maestro
+ *  Starts with 5018, 5020, 5038, 5893, 6304, 6759, 6761, 6762, 6763
+ *  Length 16 - 19
+ *
+ * Master Card
+ *  Starts with 51, 52, 53, 54, 55, 222100-272099
+ *  Length 16
+ *
+ * Visa
+ *  Starts with 4
+ *  Length 13 - 16 - 19
+ *
+ * Visa Electron
+ *  Starts with 4026, 417500, 4508, 4844, 4913, 4917
+ *  Length 16
+ *
+ */
 function genCreditCardNumber(){
 
     let creditCardNumber = Math.floor(Math.random()*10000000000000000);
@@ -624,7 +677,7 @@ function genAddressString(address, addressIndex, addresses){
 }
 
 
-/*
+/**
  *
  * genCompanyNameInfo
  *
@@ -665,7 +718,7 @@ function genCompanyNameInfo(obj={}){
 // console.log( JSON.stringify( genCompanyNameInfo({ data: [ "Best Buy Inc.", "Electronic Central", "JCPenny's", "!J INC", "#1 A LIFESAFER HOLDINGS, INC." ] }) ) );
 
 
-/*
+/**
  *
  * genProductInfo
  *
@@ -752,7 +805,7 @@ function genProductInfo(obj={}){
 // console.log(genProductInfo({ code: "89987654321-654987321", name: "Product Name", description:"Product Description", keywords:["keyword"], images:["./path/to/image.png"] }));
 
 
-/*
+/**
  *
  * genProductMeasures
  *
@@ -803,7 +856,7 @@ function genProductMeasures(obj={}){
 // );
 
 
-/*
+/**
  *
  * genProductReviewSummary
  *
@@ -840,7 +893,7 @@ function genProductReviewSummary(){
 // console.log(genProductReviewSummary());
 
 
-/*
+/**
  *
  * genProductQA
  *
@@ -917,7 +970,7 @@ function genProductReviewSummary(){
 // }
 
 
-/*
+/**
  *
  * genOrderProductsInfo
  *
@@ -1010,7 +1063,7 @@ function genOrderProductsInfo(obj={}){
 // );
 
 
-/*
+/**
  *
  * genOrderInfo
  *
@@ -1046,7 +1099,7 @@ function genOrderInfo(obj={}){
 // );
 
 
-/*
+/**
  *
  * genDocComment
  *
@@ -1065,7 +1118,7 @@ function genOrderInfo(obj={}){
 // }
 
 
-/*
+/**
  *
  * genDocKeywords
  *
@@ -1083,7 +1136,7 @@ function genOrderInfo(obj={}){
 
 
 
-/*
+/**
  *
  * genDocHistory
  *
@@ -1168,7 +1221,7 @@ function genDocHistory(obj={}){
 
 
 
-/*
+/**
  *
  * genAddresses
  *
@@ -1246,7 +1299,7 @@ function genAddresses(obj={}){
 // console.log( JSON.stringify( genAddresses({ address: addresses, index: 10, enums: enums, baseObjectId: 190, id:123654789, maxNumOfAddresses: 5 }), null, 2 ) );
 
 
-/*
+/**
  *
  * genPhoneNumbers
  *
@@ -1290,7 +1343,7 @@ function genPhoneNumbers(obj={}){
 // console.log( JSON.stringify( genPhoneNumbers({baseObjectId: 10, id: "123456789", enums: enums, delimiter: "-" }), null, 2 ) );
 
 
-/*
+/**
  *
  * genEmails
  *
@@ -1343,7 +1396,7 @@ function genEmails(obj = {}) {
 //         }), null, 2 ) );
 
 
-/*
+/**
  *
  * genWebsites
  *
@@ -1394,7 +1447,7 @@ function genCompanyEmails(obj = {}) {
 //         }), null, 2 ) );
 
 
-/*
+/**
  *
  * genWebsites
  *
@@ -1437,7 +1490,7 @@ function genWebsites(obj={}){
 // );
 
 
-/*
+/**
  *
  * genCustomer
  *
@@ -1463,7 +1516,7 @@ function genCustomer(obj={}){
 // console.log( JSON.stringify( genCustomer({ enums:enums, personId: 123456987, baseObjectId:40, reviewerRankScale: 10 }) ) );
 
 
-/*
+/**
  *
  * genTriples
  *
@@ -1615,7 +1668,7 @@ function genTriples(obj={}){
 // );
 
 
-/*
+/**
  *
  * genOriginHistories
  *
@@ -1632,7 +1685,7 @@ function genTriples(obj={}){
 
 
 
-/*
+/**
  *
  * genSupplier
  *
@@ -1650,7 +1703,7 @@ function genTriples(obj={}){
 
 
 
-/*
+/**
  *
  * genSeller
  *
@@ -1668,7 +1721,7 @@ function genTriples(obj={}){
 
 
 
-/*
+/**
  *
  * genShipmentNotes
  *
@@ -1689,7 +1742,7 @@ function genTriples(obj={}){
 // }
 
 
-/*
+/**
  *
  * genDateTime
  *
@@ -1712,7 +1765,7 @@ function genDateTime(obj={}){
 // console.log( genDateTime({ start: new Date(2004, 1, 32), end: new Date() }) );
 
 
-/*
+/**
  *
  * genDate
  *
@@ -1794,7 +1847,7 @@ function genLuxonDate(obj={}){
 // console.log( genDate() );
 
 
-/*
+/**
  *
  * genDate
  *
