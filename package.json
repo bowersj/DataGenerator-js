@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "benchmark": "^2.1.4",
+    "card-validator": "^6.2.0",
     "minimist": "^1.2.0"
   },
   "devDependencies": {},

@@ -11,22 +11,33 @@ function getRBatch_noParseInt( batchSize = 15 ){
 
     let digit = -1;
 
-    while( num > 0 ){
+    while( true ){
         digit = num % 10;
         digits.push( digit );
         num = ( num - digit ) / 10;
 
-        if( digits.length === batchSize ){
+        if( digits.length === batchSize )
             break;
-        }
 
-        if( num < 1 ){
+        if( num < 1 )
             num = Math.floor( Math.random() * Math.pow( 10, 14 ) );
-        }
     }
 
     return digits;
 }
+
+function getRBatch( batchSize = 15 ){
+    let digits = [];
+    let digit = -1;
+
+    for( let i = 0; i < batchSize; ++i ){
+        digits.push( Math.floor( Math.random() * 10 ) )
+    }
+
+    return digits;
+}
+
+// console.log( genBatch( 30 ).length );
 
 // function getRBatch_noParseInt( minBatchSize = 15 ){
 //     let digits = [];
@@ -109,11 +120,17 @@ function buildRes( context ){
 }
 
 suite
+    .add( "===== WARM UP FOR genBatch =====", function(){
+        getRBatch(30)
+    } )
     .add( "===== WARM UP FOR getRBatch_noParseInt =====", function(){
         getRBatch_noParseInt(30)
     } )
     .add( "===== WARM UP FOR getRBatch_parseInt =====", function(){
         getRBatch_parseInt(30)
+    } )
+    .add( "===== genBatch =====", function(){
+        getRBatch(30)
     } )
     .add( "===== getRBatch_noParseInt =====", function(){
         getRBatch_noParseInt(30)
