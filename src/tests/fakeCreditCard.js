@@ -79,7 +79,7 @@ function genCreditCardNumber(){
     }
 }
 
-function _genVisa_hardCoded(){
+let _genVisa_hardCoded = (function (){
 
     // let floor = Math.floor;
     // let rand = Math.random;
@@ -164,10 +164,10 @@ function _genVisa_hardCoded(){
         digits.push( 10 - remainder );
 
     return digits.join( "" );
-}
+});
 
 
-function _genVisa(){
+let _genVisa = (function (){
 
     let sum = 8;
     let digit = -1;
@@ -194,38 +194,7 @@ function _genVisa(){
         digits.push( 10 - remainder );
 
     return digits.join( "" );
-}
-
-
-// function _genVisa(){
-//     let checkSum = genDigit();
-//     // let prefix = 4;
-//     let sum = 8;
-//     let digit = -1;
-//     let digits = [ 4 ];
-//     // let alt = false;
-//
-//     for( let i = 0; i < 14; ++i ){
-//         digit = genDigit();
-//         digits.push( digit);
-//         if( i % 2 === 1 ){
-//             digit *= 2;
-//             if( digit > 9 ){
-//                 digit -= 9;
-//             }
-//         }
-//         sum += digit;
-//     }
-//
-//     let remainder = sum % 10;
-//
-//     if( remainder === 0 )
-//         digits.push( 0 );
-//     else
-//         digits.push( 10 - remainder );
-//
-//     return digits.join( "" );
-// }
+});
 // let cc = _genVisa();
 // console.log( cc );
 // console.log( cc.length );
@@ -275,65 +244,42 @@ function test( test = 10, samples = 1000000 ){
     let loopRes = [];
     let hardRes = [];
 
-    for( let j = 0; j < test; ++j ){
-        let start = new Date().getTime();
-
-        for( let i = 0; i < 100; ++i ){
-            _genVisa()
-        }
-
-        loopRes.push( new Date().getTime() - start )
-    }
-
     // build out results for forLoop
 
     for( let j = 0; j < test; ++j ){
         let start = new Date().getTime();
 
-        for( let i = 0; i < 100; ++i ){
+        for( let i = 0; i < samples; ++i ){
             _genVisa_hardCoded()
         }
 
-        hardRes.push( new Date().getTime() - start )
+        hardRes.push( ( samples / ( new Date().getTime() - start ) ) * 1000 )
+    }
+
+    for( let j = 0; j < test; ++j ){
+        let start = new Date().getTime();
+
+        for( let i = 0; i < samples; ++i ){
+            _genVisa()
+        }
+
+        loopRes.push( ( samples / ( new Date().getTime() - start ) ) * 1000 )
     }
 
     return {
+        test,
+        samples,
         forLoop:{
-
+            avg: stats.getAverage( loopRes ).toLocaleString( "en-US" ),
+            med: stats.getMedian( loopRes ).toLocaleString( "en-US" ),
+            std: stats.getSampleStandardDeviation( loopRes ).toLocaleString( "en-US" )
         },
         hardCoded:{
-
+            avg: stats.getAverage( hardRes ).toLocaleString( "en-US" ),
+            med: stats.getMedian( hardRes ).toLocaleString( "en-US" ),
+            std: stats.getSampleStandardDeviation( hardRes ).toLocaleString( "en-US" )
         }
     };
 }
 
-// let test = new Benchamrk.Suite;
-//
-// test
-//     .add(
-//         "===== WARM UP FOR _genVisa =====",
-//         function(){ _genVisa() },
-//         { minSamples: 100 }
-//     )
-//     .add(
-//         "===== WARM UP FOR _genVisa_hardCoded =====",
-//         function(){ _genVisa_hardCoded() },
-//         { minSamples: 100 }
-//     )
-//     .add(
-//         "===== _genVisa =====",
-//         function(){ _genVisa() },
-//         { minSamples: 1000000 }
-//     )
-//     .add(
-//         "===== _genVisa_hardCoded =====",
-//         function(){ _genVisa_hardCoded() },
-//         { minSamples: 1000000 }
-//     )
-//     .on( "complete", function(){
-//         // console.log( this );
-//         console.log( "Summary \n" +
-//             buildRes( this )
-//         )
-//     } )
-//     .run();
+console.log( test( 10, 2000000 ) );

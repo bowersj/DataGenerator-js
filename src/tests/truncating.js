@@ -1,5 +1,5 @@
 let Benchmark = require( "benchmark" );
-let random = require( "./../randomNumberBatch/rBatch.js" );
+let random = require( "./rBatch.js" );
 
 const getAverage = function( array ){
     if( !Array.isArray(array) ) throw new TypeError('You did not pass in an array');
