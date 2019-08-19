@@ -13,11 +13,12 @@ I have, and that is why this library exists. Now in all fairness this library wo
 
 ## Performance
 Generating a 100 records is easy, generating 100 million records in a timely manor is not. You care about those extra 
-milliseconds taken by the more readable code. So as a result, the code in definitely more imperative and less logical.
+milliseconds taken by the more readable code. So as a result, the code is definitely more imperative and less logical.
 But, with that set aside, there are a few interesting cases I came across as I was coding the data generator functions.
 
 ### Insights
-1) __Hard coding everything does not guarantee better performance in JS__. See the [`fakeCreditCard.js`](src/tests/fakeCreditCard.js) 
+1) __Hard coding everything does not guarantee better performance in JS__. See the 
+[`fakeCreditCard.js`](src/tests/fakeCreditCard.js) 
 for details. This surprised me, hard coding it should result in less overhead and therefore better efficiency but it 
 doesn't. There could be many reasons, one of which could be a faulty test but assuming my test is not faulty, this is
 a weird result, so what can we learn from it? The V8 engine has multiple steps when it comes to compiling and
@@ -25,5 +26,6 @@ optimizing your code, yes it optimizes your code for you! So that alone makes th
 the reason why my hard coded function is slower. If you take a look at my `_getVisa` function you will see that the 
 for loop always runs 14 times. So, the compiler might be smart enough to catch that and convert that to an internal 
 version where there is no for loop! This would explain why it is getting slightly better results. So main take away
-here, V8 optimizes your code for you, so don't over complicate your code because the more complicated it gets the less
-the compiler can optimize your code. Note, the [() around the functions tells V8 to compile that function asap](https://v8.dev/blog/code-caching-for-devs#iife).
+here is, __V8 optimizes your code for you__, so __don't over complicate your code__ because the more complicated it
+gets its less likely that the compiler can optimize your code. Note, the 
+[() around the functions tells V8 to compile that function asap!](https://v8.dev/blog/code-caching-for-devs#iife).
