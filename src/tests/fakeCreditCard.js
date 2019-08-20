@@ -167,67 +167,11 @@ let _genVisa_hardCoded = (function (){
 });
 
 
-let _genVisa = (function (){
-
-    let sum = 8;
-    let digit = -1;
-    let digits = [ 4 ];
-    // let alt = false;
-
-    for( let i = 0; i < 14; ++i ){
-        digit = Math.floor( Math.random() * 10 );
-        digits.push( digit);
-        if( i % 2 === 1 ){
-            digit *= 2;
-            if( digit > 9 ){
-                digit -= 9;
-            }
-        }
-        sum += digit;
-    }
-
-    let remainder = sum % 10;
-
-    if( remainder === 0 )
-        digits.push( 0 );
-    else
-        digits.push( 10 - remainder );
-
-    return digits.join( "" );
-});
-// let cc = _genVisa();
+let _genVisa = require( "./../dataGeneration/creditCard.js" ).visa["16"];
+// let cc = _genVisa().join("");
 // console.log( cc );
 // console.log( cc.length );
 // console.log( valid_credit_card.number( cc ) );
-
-
-/**
- * @function genDigit
- *
- * Purpose
- * Generate a random number between 0 and 9 inclusive
- *
- * @examples
- * genDigit()   => 0
- * genDigit()   => 5
- * genDigit()   => 1
- * genDigit()   => 0
- *
- */
-function genDigit(){
-    return Math.floor( Math.random() * 10 );
-}
-
-function buildRes( context ){
-    let acc = [];
-    context.map(
-        ( obj ) => {
-            if( !obj.name.includes( "WARM UP" ) )
-                acc.push( `${obj.name}: Opts per Sec. ${ Math.floor(obj.hz).toLocaleString( "en-US" ) }` );
-        }
-    );
-    return acc.join( "\n" );
-}
 
 function test( test = 10, samples = 1000000 ){
 
