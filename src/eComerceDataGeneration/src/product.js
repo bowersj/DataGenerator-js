@@ -1,16 +1,16 @@
-/*
- *
+/**
  * product.js
  *
  * Purpose
  * Generate product documents
+ *
+ * ! webisteId is not unique but it should be
  *
  * TODO: currently only produces one document. Need to specify amount to produce and then loop through it.
  * TODO: need to move questions out of this the product document and into there own doc type.
  *
  * NOTE: average product doc size is roughly:   4.4617706564360402991909632117234 KB
  * NOTE: average question doc size is roughly:  15.929466051417270929466051417271 KB
- *
  *
  * NOTE: had to clean up patent source data with the following regex commands
  *     \b\s{2,}\b
