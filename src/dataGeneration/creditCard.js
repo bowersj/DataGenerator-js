@@ -9,7 +9,8 @@ module.exports = {
     visa: genVisa,
     visaElectron: genVisaElectron,
     masterCard: genMasterCard,
-    discoverCard: genDiscoverCard
+    discoverCard: genDiscoverCard,
+    americanExpress: genAmericanExpress
 };
 
 
@@ -506,11 +507,9 @@ function _genMasterCard2720(){
  * Discover Card
  * prefixes 6011, 644 to 649, 65
  * Lengths 16, 19
- *
- * TODO: need to implement the 19 length versions
  */
 function genDiscoverCard() {
-    let funcs = [ _genDiscoverCard6011_16, _genDiscoverCard644_16, _genDiscoverCard65_16 ];
+    let funcs = [ _genDiscoverCard6011_16, _genDiscoverCard644_16, _genDiscoverCard65_16, _genDiscoverCard6011_19, _genDiscoverCard644_19, _genDiscoverCard65_19 ];
     return funcs[ Math.floor( Math.random() * funcs.length ) ]();
 }
 
@@ -600,3 +599,163 @@ function _genDiscoverCard65_16(){
 
     return digits;
 }
+
+function _genDiscoverCard6011_19(){
+    let digit = -1;
+    let digits = [ 6, 0, 1, 1 ];
+    let sum = 9;
+
+    for( let i = 0; i < 14; ++i ){
+        digit = Math.floor( Math.random() * 10 );
+        digits.push( digit);
+        if( i % 2 === 1 ){
+            digit *= 2;
+            if( digit > 9 ){
+                digit -= 9;
+            }
+        }
+        sum += digit;
+    }
+
+    let remainder = sum % 10;
+
+    if( remainder === 0 )
+        digits.push( 0 );
+    else
+        digits.push( 10 - remainder );
+
+    return digits;
+}
+
+function _genDiscoverCard644_19(){
+    let digit = -1;
+    let opts = [
+        [ 6, 4, 4 ], [ 6, 4, 5 ], [ 6, 4, 6 ],
+        [ 6, 4, 7 ], [ 6, 4, 8 ], [ 6, 4, 9 ]
+    ];
+
+    let digits = opts[ Math.floor( Math.random() * opts.length ) ];
+    let sum = 14 + digits[2];
+
+    for( let i = 0; i < 15; ++i ){
+        digit = Math.floor( Math.random() * 10 );
+        digits.push( digit);
+        if( i % 2 === 0 ){
+            digit *= 2;
+            if( digit > 9 ){
+                digit -= 9;
+            }
+        }
+        sum += digit;
+    }
+
+    let remainder = sum % 10;
+
+    if( remainder === 0 )
+        digits.push( 0 );
+    else
+        digits.push( 10 - remainder );
+
+    return digits;
+}
+
+function _genDiscoverCard65_19(){
+    let digit = -1;
+    let opts = [ 2, 3, 4, 6, 7, 8, 9 ];
+    let num = opts[ Math.floor( Math.random() * opts.length ) ];
+    let digits = [ 6, 5, num ];
+    let sum = 7 + num;
+
+    for( let i = 0; i < 15; ++i ){
+        digit = Math.floor( Math.random() * 10 );
+        digits.push( digit);
+        if( i % 2 === 0 ){
+            digit *= 2;
+            if( digit > 9 ){
+                digit -= 9;
+            }
+        }
+        sum += digit;
+    }
+
+    let remainder = sum % 10;
+
+    if( remainder === 0 )
+        digits.push( 0 );
+    else
+        digits.push( 10 - remainder );
+
+    return digits;
+}
+
+
+/**
+ * American Express
+ * prefixes 34, 37
+ * lengths 15
+ */
+function genAmericanExpress(){
+    let funcs = [ _genAmericanExpress34, _genAmericanExpress37 ];
+    return funcs[ Math.floor( Math.random() * funcs.length ) ]();
+}
+
+function _genAmericanExpress34(){
+    let digit = -1;
+    let digits = [ 3, 4 ];
+    let sum = 11;
+
+    for( let i = 0; i < 12; ++i ){
+        digit = Math.floor( Math.random() * 10 );
+        digits.push( digit);
+        if( i % 2 === 1 ){
+            digit *= 2;
+            if( digit > 9 ){
+                digit -= 9;
+            }
+        }
+        sum += digit;
+    }
+
+    let remainder = sum % 10;
+
+    if( remainder === 0 )
+        digits.push( 0 );
+    else
+        digits.push( 10 - remainder );
+
+    return digits;
+}
+
+function _genAmericanExpress37(){
+    let digit = -1;
+    let digits = [ 3, 7 ];
+    let sum = 8;
+
+    for( let i = 0; i < 12; ++i ){
+        digit = Math.floor( Math.random() * 10 );
+        digits.push( digit);
+        if( i % 2 === 1 ){
+            digit *= 2;
+            if( digit > 9 ){
+                digit -= 9;
+            }
+        }
+        sum += digit;
+    }
+
+    let remainder = sum % 10;
+
+    if( remainder === 0 )
+        digits.push( 0 );
+    else
+        digits.push( 10 - remainder );
+
+    return digits;
+}
+
+
+/**
+ * UnionPay
+ * Prefixes
+ * Lengths
+ */

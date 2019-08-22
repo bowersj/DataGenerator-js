@@ -1,8 +1,9 @@
-let stats = require( "./../../stats/base.js" );
-let gen = require( "./../creditCard.js" );
+const stats = require( "./../../stats/base.js" );
+const gen = require( "./../creditCard.js" );
+const generated = require( "./../_genUnionPayModule.js" );
 
 let valid_credit_card = require( 'card-validator' );
-let cc = gen.discoverCard();
+let cc = gen.americanExpress();
 console.log( cc );
 console.log( cc.length );
 console.log( valid_credit_card.number( cc.join( "" ) ) );
@@ -47,6 +48,14 @@ function runTests( test = 10, samples = 1000000 ){
     }
 
     for( let i = 0; i < 100; ++i ){
+        gen.americanExpress();
+    }
+
+    for( let i = 0; i < 100; ++i ){
+        generated.generated();
+    }
+
+    for( let i = 0; i < 100; ++i ){
         gen.discoverCard();
     }
 
@@ -55,6 +64,8 @@ function runTests( test = 10, samples = 1000000 ){
     let visaElectronTests = _test( test, samples, gen.visaElectron );
     let masterCardTests = _test( test, samples, gen.masterCard );
     let discoverCardTests = _test( test, samples, gen.discoverCard );
+    let americanExpressTests = _test( test, samples, gen.americanExpress );
+    // let testGeneratedFunction = _test( test, samples, generated.generated );
 
     return {
         test,
@@ -62,8 +73,10 @@ function runTests( test = 10, samples = 1000000 ){
         visa: parseTestTimes( visaTests ),
         visaElectron: parseTestTimes( visaElectronTests ),
         masterCard: parseTestTimes( masterCardTests ),
+        americanExpress: parseTestTimes( americanExpressTests ),
+        // generatedAmericanExpressFunction: parseTestTimes( testGeneratedFunction ),
         discoverCard: parseTestTimes( discoverCardTests ),
     };
 }
 
-console.log( runTests( 10, 4000000 ) );
+// console.log( runTests( 10, 4000000 ) );
