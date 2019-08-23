@@ -3,7 +3,7 @@ const gen = require( "./creditCard.js" );
 const generated = require( "./_genCreditCardFunctions.js" );
 
 let valid_credit_card = require( 'card-validator' );
-let cc = gen.americanExpress();
+let cc = gen.unionPay();
 console.log( cc );
 console.log( cc.length );
 console.log( valid_credit_card.number( cc.join( "" ) ) );
@@ -52,7 +52,7 @@ function runTests( test = 10, samples = 1000000 ){
     }
 
     for( let i = 0; i < 100; ++i ){
-        generated.generated();
+        gen.unionPay();
     }
 
     for( let i = 0; i < 100; ++i ){
@@ -65,7 +65,7 @@ function runTests( test = 10, samples = 1000000 ){
     let masterCardTests = _test( test, samples, gen.masterCard );
     let discoverCardTests = _test( test, samples, gen.discoverCard );
     let americanExpressTests = _test( test, samples, gen.americanExpress );
-    // let testGeneratedFunction = _test( test, samples, generated.generated );
+    let testUnionPay = _test( test, samples, gen.unionPay );
 
     return {
         test,
@@ -74,9 +74,9 @@ function runTests( test = 10, samples = 1000000 ){
         visaElectron: parseTestTimes( visaElectronTests ),
         masterCard: parseTestTimes( masterCardTests ),
         americanExpress: parseTestTimes( americanExpressTests ),
-        // generatedAmericanExpressFunction: parseTestTimes( testGeneratedFunction ),
         discoverCard: parseTestTimes( discoverCardTests ),
+        unionPay: parseTestTimes( testUnionPay ),
     };
 }
 
-// console.log( runTests( 10, 4000000 ) );
+console.log( runTests( 10, 3000000 ) );
