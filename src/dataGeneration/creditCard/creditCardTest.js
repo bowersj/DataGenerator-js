@@ -1,6 +1,6 @@
-const stats = require( "./../../stats/base.js" );
-const gen = require( "./../creditCard.js" );
-const generated = require( "./../_genUnionPayModule.js" );
+const stats = require( "../../stats/base.js" );
+const gen = require( "./creditCard.js" );
+const generated = require( "./_genCreditCardFunctions.js" );
 
 let valid_credit_card = require( 'card-validator' );
 let cc = gen.americanExpress();

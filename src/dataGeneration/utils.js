@@ -3,10 +3,11 @@ module.exports.isOdd = isOdd;
 module.exports.getDigit = getDigit;
 module.exports.getDigitCount = getDigitCount;
 module.exports.getDigits = getDigits;
+module.exports.mod = mod;
 module.exports.genPatternOptions = genPatternOptions;
 module.exports.genCreditCardFunctionBody = genCreditCardFunctionBody;
-module.exports.genCreditCardPatternRangeBody = genCreditCardPatternRangeBody;
 module.exports.buildFunction = buildFunction;
+module.exports.buildCreditCardFunctions = buildCreditCardFunctions;
 
 function isOdd( int ){
     return int % 2 === 1
@@ -33,8 +34,23 @@ function getDigits( int ){
     return digits.reverse();
 }
 
-// console.log( getDigits( 123456789 ) );
+function mod( num, modVal ){
+    return num % modVal;
+}
 
+// console.log( getDigits( 123456789 ) );
+/**
+ * @function genPatternOptions
+ * @version 1.0.0
+ * @public
+ *
+ * takes an array, of at least two numbers, and splits it up like so
+ * [ 2221, 2229 ] => [
+ *  [ 2, 2, 2, 1 ], [ 2, 2, 2, 2 ], [ 2, 2, 2, 3 ],
+ *  [ 2, 2, 2, 4 ], [ 2, 2, 2, 5 ], [ 2, 2, 2, 6 ],
+ *  [ 2, 2, 2, 7 ], [ 2, 2, 2, 8 ], [ 2, 2, 2, 9 ]
+ * ]
+ */
 function genPatternOptions( range ){
     let start = range[0];
     let end = range[1];
@@ -52,15 +68,28 @@ function genPatternOptions( range ){
     return opts;
 }
 
-// console.log( genPatternOptions( [627700, 627779] ) );
+// console.log( genPatternOptions( [624, 626] ) );
 
-function genCreditCardFunctionBody( pattern, sum, length, doubleWhen ){
+function genCreditCardFunctionBody( type, pattern, length ){
+    let howManyDigitsToGenerate = length - pattern.length - 1;
+    let doubleWhen = isOdd( howManyDigitsToGenerate ) ? 0 : 1;
+    let whenToDouble = isOdd( length ) ? 1 : 0;
+    let sum = 0;
+
+    for( let i = 0; i < pattern.length; ++i ){
+        if( i % 2 === whenToDouble )
+            sum += pattern[i] > 4 ? ( pattern[i] * 2 ) - 9 : pattern[i] * 2 ;
+        else
+            sum += pattern[i];
+    }
+
     return `
     let digit = -1;
     let digits = ${JSON.stringify( pattern )};
     let sum = ${sum};
+    let res = ${JSON.stringify( type )}
 
-    for( let i = 0; i < ${ length - pattern.length - 1 }; ++i ){
+    for( let i = 0; i < ${howManyDigitsToGenerate}; ++i ){
         digit = Math.floor( Math.random() * 10 );
         digits.push( digit);
         if( i % 2 === ${doubleWhen} ){
@@ -78,44 +107,55 @@ function genCreditCardFunctionBody( pattern, sum, length, doubleWhen ){
         digits.push( 0 );
     else
         digits.push( 10 - remainder );
+        
+    res.number = digits;
 
-    return digits;`
-}
-
-
-function genCreditCardPatternRangeBody( pattern, initialSum, pos, length, doubleWhen ){
-    return `
-    let digit = -1;
-    let opts = ${JSON.stringify( pattern )};
-
-    let digits = opts[ Math.floor( Math.random() * opts.length ) ];
-    let sum = ${initialSum} + digits[${pos}];
-
-    for( let i = 0; i < ${length - pattern[0].length - 1}; ++i ){
-        digit = Math.floor( Math.random() * 10 );
-        digits.push( digit);
-        if( i % 2 === ${ doubleWhen } ){
-            digit *= 2;
-            if( digit > 9 ){
-                digit -= 9;
-            }
-        }
-        sum += digit;
-    }
-
-    let remainder = sum % 10;
-
-    if( remainder === 0 )
-        digits.push( 0 );
-    else
-        digits.push( 10 - remainder );
-
-    return digits;`
+    return res;`
 }
 
 function buildFunction( name, body ){
-    return `let ${name} = function(){${body}}
-    `;
+    return `
+    function ${name}(){
+        ${body}
+    }`;
 }
 
-let test = buildFunction( "",  );
+// let test = buildFunction( "",  );
+
+
+function _buildCreditCardFunction( card, pattern, length ){
+    return buildFunction( card.type, genCreditCardFunctionBody( card, getDigits( pattern ), length ) );
+}
+
+
+function buildCreditCardFunctions( type ){
+    let creditCardFunctions = [];
+    let typePatterns = type.patterns;
+    // console.log( "type patterns", typePatterns );
+    let lens = type.lengths;
+
+    let length = -1;
+    let patternRange = [ [] ];
+    let pattern = [];
+
+    for( let i = 0; i < lens.length; ++i ){
+        length = lens[i];
+        for( let j = 0; j < typePatterns.length; ++j ){
+            pattern = typePatterns[j];
+            if( Array.isArray( pattern ) ){
+
+                patternRange = genPatternOptions( pattern );
+                for( let k = 0; k < patternRange.length; ++k ){
+                    creditCardFunctions.push( new Function( genCreditCardFunctionBody( type, patternRange[k], length ) ) );
+                }
+
+            } else {
+                creditCardFunctions.push( new Function( genCreditCardFunctionBody( type, getDigits( pattern ), length ) ) );
+            }
+
+        }
+
+    }
+
+    return creditCardFunctions;
+}
