@@ -12,7 +12,7 @@ module.exports = {
     masterCard: genMasterCard,
     discoverCard: genDiscoverCard,
     americanExpress: genAmericanExpress,
-    unionPay: genUnionPay
+    unionPay: genUnionPay,
 };
 
 
@@ -795,13 +795,9 @@ let optsNii = [
 // console.log( flattenSpecial( optsNii ).length );
 optsNii = flattenSpecial( optsNii );
 
-function genUnionPay(){
-    let funcs = [ genUnionPay14, genUnionPay15, genUnionPay16, genUnionPay17, genUnionPay18, genUnionPay19 ];
-    return funcs[ Math.floor( Math.random() * funcs.length ) ]();
-}
-
-function genUnionPay14(){
-    let length = 14;
+function genUnionPay_helper( optsNii ){
+    let lengths = [ 14, 15, 16, 17, 18, 19 ];
+    let length = lengths[ Math.floor( Math.random() * lengths.length ) ];
     let nii = optsNii[ Math.floor( Math.random() * optsNii.length ) ];
     let digit = -1;
     let sum = 0;
@@ -839,197 +835,4 @@ function genUnionPay14(){
     return digits;
 }
 
-function genUnionPay15(){
-    let length = 15;
-    let nii = optsNii[ Math.floor( Math.random() * optsNii.length ) ];
-    let digit = -1;
-    let sum = 0;
-    let digits = utils.getDigits( nii );
-
-    let neededDigits = length - digits.length - 1;
-    let doubleWhen = utils.isOdd( neededDigits ) ? 0 : 1;
-
-    for( let i = 0; i < digits.length; ++i ){
-        if( i % 2 === 1 )
-            sum += digits[i] > 4 ? ( digits[i] * 2 ) - 9 : digits[i] * 2 ;
-        else
-            sum += digits[i];
-    }
-
-    for( let i = 0; i < neededDigits; ++i ){
-        digit = Math.floor( Math.random() * 10 );
-        digits.push( digit);
-        if( i % 2 === doubleWhen ){
-            digit *= 2;
-            if( digit > 9 ){
-                digit -= 9;
-            }
-        }
-        sum += digit;
-    }
-
-    let remainder = sum % 10;
-
-    if( remainder === 0 )
-        digits.push( 0 );
-    else
-        digits.push( 10 - remainder );
-
-    return digits;
-}
-
-function genUnionPay16(){
-    let length = 16;
-    let nii = optsNii[ Math.floor( Math.random() * optsNii.length ) ];
-    let digit = -1;
-    let sum = 0;
-    let digits = utils.getDigits( nii );
-
-    let neededDigits = length - digits.length - 1;
-    let doubleWhen = utils.isOdd( neededDigits ) ? 0 : 1;
-
-    for( let i = 0; i < digits.length; ++i ){
-        if( i % 2 === 0 )
-            sum += digits[i] > 4 ? ( digits[i] * 2 ) - 9 : digits[i] * 2 ;
-        else
-            sum += digits[i];
-    }
-
-    for( let i = 0; i < neededDigits; ++i ){
-        digit = Math.floor( Math.random() * 10 );
-        digits.push( digit);
-        if( i % 2 === doubleWhen ){
-            digit *= 2;
-            if( digit > 9 ){
-                digit -= 9;
-            }
-        }
-        sum += digit;
-    }
-
-    let remainder = sum % 10;
-
-    if( remainder === 0 )
-        digits.push( 0 );
-    else
-        digits.push( 10 - remainder );
-
-    return digits;
-}
-
-function genUnionPay17(){
-    let length = 17;
-    let nii = optsNii[ Math.floor( Math.random() * optsNii.length ) ];
-    let digit = -1;
-    let sum = 0;
-    let digits = utils.getDigits( nii );
-
-    let neededDigits = length - digits.length - 1;
-    let doubleWhen = utils.isOdd( neededDigits ) ? 0 : 1;
-
-    for( let i = 0; i < digits.length; ++i ){
-        if( i % 2 === 1 )
-            sum += digits[i] > 4 ? ( digits[i] * 2 ) - 9 : digits[i] * 2 ;
-        else
-            sum += digits[i];
-    }
-
-    for( let i = 0; i < neededDigits; ++i ){
-        digit = Math.floor( Math.random() * 10 );
-        digits.push( digit);
-        if( i % 2 === doubleWhen ){
-            digit *= 2;
-            if( digit > 9 ){
-                digit -= 9;
-            }
-        }
-        sum += digit;
-    }
-
-    let remainder = sum % 10;
-
-    if( remainder === 0 )
-        digits.push( 0 );
-    else
-        digits.push( 10 - remainder );
-
-    return digits;
-}
-
-function genUnionPay18(){
-    let length = 18;
-    let nii = optsNii[ Math.floor( Math.random() * optsNii.length ) ];
-    let digit = -1;
-    let sum = 0;
-    let digits = utils.getDigits( nii );
-
-    let neededDigits = length - digits.length - 1;
-    let doubleWhen = utils.isOdd( neededDigits ) ? 0 : 1;
-
-    for( let i = 0; i < digits.length; ++i ){
-        if( i % 2 === 0 )
-            sum += digits[i] > 4 ? ( digits[i] * 2 ) - 9 : digits[i] * 2 ;
-        else
-            sum += digits[i];
-    }
-
-    for( let i = 0; i < neededDigits; ++i ){
-        digit = Math.floor( Math.random() * 10 );
-        digits.push( digit);
-        if( i % 2 === doubleWhen ){
-            digit *= 2;
-            if( digit > 9 ){
-                digit -= 9;
-            }
-        }
-        sum += digit;
-    }
-
-    let remainder = sum % 10;
-
-    if( remainder === 0 )
-        digits.push( 0 );
-    else
-        digits.push( 10 - remainder );
-
-    return digits;
-}
-
-function genUnionPay19(){
-    let length = 19;
-    let nii = optsNii[ Math.floor( Math.random() * optsNii.length ) ];
-    let digit = -1;
-    let sum = 0;
-    let digits = utils.getDigits( nii );
-
-    let neededDigits = length - digits.length - 1;
-    let doubleWhen = utils.isOdd( neededDigits ) ? 0 : 1;
-
-    for( let i = 0; i < digits.length; ++i ){
-        if( i % 2 === 1 )
-            sum += digits[i] > 4 ? ( digits[i] * 2 ) - 9 : digits[i] * 2 ;
-        else
-            sum += digits[i];
-    }
-
-    for( let i = 0; i < neededDigits; ++i ){
-        digit = Math.floor( Math.random() * 10 );
-        digits.push( digit);
-        if( i % 2 === doubleWhen ){
-            digit *= 2;
-            if( digit > 9 ){
-                digit -= 9;
-            }
-        }
-        sum += digit;
-    }
-
-    let remainder = sum % 10;
-
-    if( remainder === 0 )
-        digits.push( 0 );
-    else
-        digits.push( 10 - remainder );
-
-    return digits;
-}
+let genUnionPay = genUnionPay_helper.bind( null, optsNii );

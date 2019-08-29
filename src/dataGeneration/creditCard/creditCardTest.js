@@ -79,4 +79,4 @@ function runTests( test = 10, samples = 1000000 ){
     };
 }
 
-console.log( runTests( 10, 3000000 ) );
+// console.log( runTests( 10, 3000000 ) );
