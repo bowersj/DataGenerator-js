@@ -167,7 +167,7 @@ let _genVisa_hardCoded = (function (){
 });
 
 
-let _genVisa = require( "../dataGeneration/creditCard/creditCard.js" ).visa["16"];
+let _genVisa = require( "../dataGeneration/creditCard/creditCardNumbers.js" ).visa["16"];
 // let cc = _genVisa().join("");
 // console.log( cc );
 // console.log( cc.length );
