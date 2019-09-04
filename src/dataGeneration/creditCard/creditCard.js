@@ -7,8 +7,13 @@
 const utils = require( "./../utils.js" );
 const ccs = require( "./ccTypes.js" );
 
-const genUnionPay = genCreditCard_helper.bind( null, flattenSpecial( ccs.unionpay.patterns ), [ 14, 15, 16, 17, 18, 19 ] );
+const genUnionPay = genCreditCard_helper.bind( null, flattenSpecial( ccs.unionpay.patterns ), ccs.unionpay.lengths );
 // const genUnionPay = genCreditCard_helper( ccs.unionpay.patterns, [ 14, 15, 16, 17, 18, 19 ] );
+const genMaestro = genCreditCard_helper.bind( null, flattenSpecial( ccs.maestro.patterns ), ccs.maestro.lengths );
+const genElo = genCreditCard_helper.bind( null, flattenSpecial( ccs.elo.patterns ), ccs.elo.lengths );
+const genMir = genCreditCard_helper.bind( null, flattenSpecial( ccs.mir.patterns ), ccs.mir.lengths );
+const genHiper = genCreditCard_helper.bind( null, flattenSpecial( ccs.hiper.patterns ), ccs.hiper.lengths );
+const genHiperCard = genCreditCard_helper.bind( null, flattenSpecial( ccs.hipercard.patterns ), ccs.hipercard.lengths );
 
 module.exports = {
     visa: genVisa,
@@ -17,6 +22,11 @@ module.exports = {
     discoverCard: genDiscoverCard,
     americanExpress: genAmericanExpress,
     unionPay: genUnionPay,
+    maestro: genMaestro,
+    elo: genElo,
+    mir: genMir,
+    hiper: genHiper,
+    hipercard: genHiperCard
 };
 
 
@@ -52,7 +62,7 @@ function genCreditCard_helper( optsNii, lengths ){
     let doubleWhen = utils.isOdd( neededDigits ) ? 0 : 1;
 
     for( let i = 0; i < digits.length; ++i ){
-        if( i % 2 === 0 )
+        if( i % 2 === doubleWhen )
             sum += digits[i] > 4 ? ( digits[i] * 2 ) - 9 : digits[i] * 2 ;
         else
             sum += digits[i];
