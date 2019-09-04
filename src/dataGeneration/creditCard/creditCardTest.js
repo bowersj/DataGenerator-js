@@ -1,12 +1,11 @@
 const stats = require( "../../stats/base.js" );
 const gen = require( "./creditCard.js" );
-const generated = require( "./_genCreditCardFunctions.js" );
 
-let valid_credit_card = require( 'card-validator' );
-let cc = gen.unionPay();
-console.log( cc );
-console.log( cc.length );
-console.log( valid_credit_card.number( cc.join( "" ) ) );
+// let valid_credit_card = require( 'card-validator' );
+// let cc = gen.unionPay();
+// console.log( cc );
+// console.log( cc.length );
+// console.log( valid_credit_card.number( cc.join( "" ) ).card.type );
 
 function _test( tests, samples, functionToTest ){
     let results = [];
@@ -59,6 +58,8 @@ function runTests( test = 10, samples = 1000000 ){
         gen.discoverCard();
     }
 
+    console.log( "Testing Performance" );
+
     // test performance
     let visaTests = _test( test, samples, gen.visa );
     let visaElectronTests = _test( test, samples, gen.visaElectron );
@@ -79,4 +80,4 @@ function runTests( test = 10, samples = 1000000 ){
     };
 }
 
-// console.log( runTests( 10, 3000000 ) );
+console.log( runTests( 10, 5000000 ) );

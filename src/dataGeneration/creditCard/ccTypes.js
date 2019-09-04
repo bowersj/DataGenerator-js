@@ -1,5 +1,5 @@
-module.exports = [
-    {
+module.exports = {
+    visa:{
         niceType: 'Visa',
         type: 'visa',
         patterns: [
@@ -12,7 +12,7 @@ module.exports = [
             size: 3
         }
     },
-    {
+    mastercard:{
         niceType: 'Mastercard',
         type: 'mastercard',
         patterns: [
@@ -30,7 +30,7 @@ module.exports = [
             size: 3
         }
     },
-    {
+    americanExpress:{
         niceType: 'American Express',
         type: 'american-express',
         patterns: [
@@ -44,7 +44,7 @@ module.exports = [
             size: 4
         }
     },
-    {
+    dinersClub: {
         niceType: 'Diners Club',
         type: 'diners-club',
         patterns: [
@@ -60,7 +60,7 @@ module.exports = [
             size: 3
         }
     },
-    {
+    discover: {
         niceType: 'Discover',
         type: 'discover',
         patterns: [
@@ -86,7 +86,7 @@ module.exports = [
             size: 3
         }
     },
-    {
+    jcb: {
         niceType: 'JCB',
         type: 'jcb',
         patterns: [
@@ -101,30 +101,22 @@ module.exports = [
             size: 3
         }
     },
-    {
+    unionpay: {
         niceType: 'UnionPay',
         type: 'unionpay',
         patterns: [
-            620,
-            [624, 626],
+            620, 623, 624, 625, 626,
             [62100, 62182],
-            [62184, 62187],
+            62184, 62185, 62186, 62187,
             [62185, 62197],
-            [62200, 62205],
+            62200, 62201, 62202, 62203, 62204, 62205,
             [622010, 622999],
-            622018,
-            [622019, 622999],
-            [62207, 62209],
+            62207, 62208, 62209,
             [622126, 622925],
-            [623, 626],
-            6270,
-            6272,
-            6276,
+            6270, 6272, 6276,
             [627700, 627779],
             [627781, 627799],
-            [6282, 6289],
-            6291,
-            6292
+            6282, 6283, 6284, 6285, 6286, 6287, 6288, 6289, 6291, 6292
         ],
         gaps: [4, 8, 12],
         lengths: [14, 15, 16, 17, 18, 19],
@@ -133,7 +125,7 @@ module.exports = [
             size: 3
         }
     },
-    {
+    maestro: {
         niceType: 'Maestro',
         type: 'maestro',
         patterns: [
@@ -152,7 +144,7 @@ module.exports = [
             size: 3
         }
     },
-    {
+    elo: {
         niceType: 'Elo',
         type: 'elo',
         patterns: [
@@ -189,7 +181,7 @@ module.exports = [
             size: 3
         }
     },
-    {
+    mir: {
         niceType: 'Mir',
         type: 'mir',
         patterns: [
@@ -202,7 +194,7 @@ module.exports = [
             size: 3
         }
     },
-    {
+    hiper: {
         niceType: 'Hiper',
         type: 'hiper',
         patterns: [
@@ -219,7 +211,7 @@ module.exports = [
             size: 3
         }
     },
-    {
+    hipercard: {
         niceType: 'Hipercard',
         type: 'hipercard',
         patterns: [
@@ -232,4 +224,4 @@ module.exports = [
             size: 3
         }
     }
-];
+};
