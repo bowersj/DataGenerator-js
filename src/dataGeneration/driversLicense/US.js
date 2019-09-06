@@ -9,12 +9,6 @@
 // https://stackoverflow.com/questions/45493570/validate-uk-driving-license-regex-in-javascript#answer-46447128
 const utils = require( "./../utils.js" );
 
-module.exports = {
-    alabama: numericLicense_helper.bind( null, 7 ),
-    alaska: numericLicense_helper.bind( null, 7 ),
-    // arizona:
-};
-
 
 const firstNameEncoding = {
     ALBERT: 20,	    FRANK: 260,	    MELVIN: 600,
@@ -83,20 +77,4 @@ function lastTwoDigitsOfBirthYear( year ){
 
 function monthDayGenderEncoding_general( month, day, monthMultiplier, gender, genderEncoding ){
     return ( month - 1 ) * monthMultiplier + day + genderEncoding[ gender ]
-}
-
-
-function numericLicenseRange_helper( min, max ){
-
-}
-
-
-function numericLicense_helper( numOfDigits ){
-    let license = [ Math.floor( Math.random() * 9 ) + 1 ];
-
-    for( let i = 0; i < numOfDigits - 1; ++i ){
-        license.push( Math.floor( Math.random() * 10 ) );
-    }
-
-    return license;
 }
