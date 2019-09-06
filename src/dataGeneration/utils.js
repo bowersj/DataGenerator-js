@@ -1,5 +1,6 @@
 
 module.exports.isOdd = isOdd;
+module.exports.union = union;
 module.exports.getDigit = getDigit;
 module.exports.getDigitCount = getDigitCount;
 module.exports.getDigits = getDigits;
@@ -158,4 +159,9 @@ function buildCreditCardFunctions( type ){
     }
 
     return creditCardFunctions;
+}
+
+
+function union( boolArr ){
+    return boolArr.reduce( ( acc, cur ) => acc && cur );
 }
