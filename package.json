@@ -9,6 +9,7 @@
   "dependencies": {
     "benchmark": "^2.1.4",
     "card-validator": "^6.2.0",
+    "event-stream": "^4.0.1",
     "minimist": "^1.2.0"
   },
   "devDependencies": {},
