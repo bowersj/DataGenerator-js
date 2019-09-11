@@ -12,9 +12,9 @@ I have, and that is why this library exists. Now in all fairness this library wo
  
  
 ## Source data Sources
-[Rubys Faker](https://github.com/faker-ruby/faker/tree/b913e7cba609b42c74f7968840270c74a1cbbd0b) package has become a 
+[Rubys Faker](https://github.com/faker-ruby/faker) package has become a 
 great example of quality fake data generation. It also has many sources that are free which I have ported to this library.
-[The sources seem to saved in locale files](https://github.com/faker-ruby/faker/tree/b913e7cba609b42c74f7968840270c74a1cbbd0b/lib/locales)
+[The sources seem to saved in locale files](https://github.com/faker-ruby/faker/tree/master/lib/locales)
 in a yaml format so converting them to JSON should be at least possible...
 [see yamljs for details](https://www.npmjs.com/package/yamljs)
 
