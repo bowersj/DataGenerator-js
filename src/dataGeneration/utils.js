@@ -9,6 +9,7 @@ module.exports.genPatternOptions = genPatternOptions;
 module.exports.genCreditCardFunctionBody = genCreditCardFunctionBody;
 module.exports.buildFunction = buildFunction;
 module.exports.buildCreditCardFunctions = buildCreditCardFunctions;
+module.exports.filterArrayByArray = filterArrayByArray;
 
 function isOdd( int ){
     return int % 2 === 1
@@ -121,13 +122,6 @@ function buildFunction( name, body ){
     }`;
 }
 
-// let test = buildFunction( "",  );
-
-
-function _buildCreditCardFunction( card, pattern, length ){
-    return buildFunction( card.type, genCreditCardFunctionBody( card, getDigits( pattern ), length ) );
-}
-
 
 function buildCreditCardFunctions( type ){
     let creditCardFunctions = [];
@@ -164,4 +158,29 @@ function buildCreditCardFunctions( type ){
 
 function union( boolArr ){
     return boolArr.reduce( ( acc, cur ) => acc && cur );
+}
+
+/**
+ * @function filterArrayByArray
+ * @version 1.0.0
+ * @public
+ *
+ * filters an array by another array, this has the potential to be very slow so if working with massive
+ * data sets consider sorting and then using a method similar to this one.
+ *
+ *
+ * @param {Array} array - the array to filter
+ * @param {Array} filterArray - the array whose values you would like to filter by.
+ * @param {Function} filterFunc - the function to use to filter the array in the array parameter.
+ *          Note: it must be a traditional function since arrow functions have lexical scoping and this
+ *          works by using using JavaScript function's original scoping.
+ *
+ * @return {Array} the filtered array
+ *
+ */
+function filterArrayByArray( array, filterArray, filterFunc ){
+    return array.filter(
+        filterFunc,
+        filterArray
+    );
 }

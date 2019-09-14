@@ -9,6 +9,14 @@ I have, and that is why this library exists. Now in all fairness this library wo
  well, it is written in javascript and uses [node.js](https://nodejs.org/en/) as its environment. But it will easy 
  to use, take advantage of fast and multi-threaded environments through using the cluster module, more on that latter. 
  So, how does it work? What do I need to do to make this thing generate some data?
+ 
+ 
+## Source data Sources
+[Rubys Faker](https://github.com/faker-ruby/faker) package has become a 
+great example of quality fake data generation. It also has many sources that are free which I have ported to this library.
+[The sources seem to saved in locale files](https://github.com/faker-ruby/faker/tree/master/lib/locales)
+in a yaml format so converting them to JSON should be at least possible...
+[see yamljs for details](https://www.npmjs.com/package/yamljs)
 
 
 ## Performance

@@ -34,7 +34,8 @@ const args = minimist(
     {
         alias:{
             x: "threads",
-            y: "docs"
+            y: "docs",
+            s: "start"
         }
     }
 );
