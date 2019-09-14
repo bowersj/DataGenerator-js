@@ -29,15 +29,21 @@ function buildFormatter( pattern, opts = {} ){
     }, opts );
 
     let tokens = pattern.split( "" );
+
     let parameterName = "val";
     let map = {
-        d: digitToken_array
+        // d: digitToken_array
+        d: digitToken_simple
     };
 
     let functionBody = _buildArrayFormatterBody( tokens, parameterName, map, opts );
 
-    console.log( functionBody );
+    // return _returnFunction( parameterName, functionBody );
+    return new Function ( parameterName, functionBody );
+}
 
+
+function _returnFunction( parameterName, functionBody ){
     return new Function ( parameterName, functionBody );
 }
 
@@ -53,6 +59,19 @@ function digitToken_array( varName, path, index ){
     let val = _buildPath( varName, `${path}[${index}]` );
     // let val = `${varName}${path}[${index}]`;
     return _isolate( _ternary( val, `${val}.toString()`, '""' ) );
+}
+
+
+/**
+ * @param {String} varName - the name of the variable be referenced
+ * @param {String} path - the path to an array, it must start with a ".",
+ *      unless no path is needed, in which case pass in ""
+ * @param {Number|string} index - the index with in an array
+ *
+ */
+function digitToken_simple( varName, path, index ){
+    let val = _buildPath( varName, `${path}[${index}]` );
+    return `${val}.toString()`;
 }
 
 
@@ -76,8 +95,7 @@ function _buildPath( varName, path ){
 }
 
 
-function _buildArrayFormatterBody( tokens, paramName, map, opts ){
-
+function _buildCreditCardFormatterBody( tokens, paramName, map, opts ){
     let functionBody = "return ";
     let token = "";
     let expression = "";
@@ -109,15 +127,78 @@ function _buildArrayFormatterBody( tokens, paramName, map, opts ){
             }
         }
     }
-
-
-        // functionBody = functionBody.trim().replace( /\s\+\s$/, "" );
+    // functionBody = functionBody.trim().replace( /\s\+\s$/, "" );
 
     return functionBody;
 }
 
 
-let format = buildFormatter( "dddd-dddd-dddd-dddd" );
+function _buildArrayFormatterBody( tokens, paramName, map, opts ){
+
+    let functionBody = "return ";
+    let token = "";
+    let expression = "";
+    let path = "";
+    let strToken = "";
+
+    // console.log( tokens );
+
+    let j = 0;
+    for( let i = 0; i < tokens.length; ++i ){
+        token = tokens[i];
+
+        if( token in map ){
+            if( i === tokens.length - 1 )
+                functionBody += `${map[ token ]( paramName, "", j )}`;
+            else
+                functionBody += `${map[ token ]( paramName, "", j )} + `;
+            // console.log( functionBody );
+            ++j;
+        } else {
+            path = _buildPath( paramName, `[${j}]` );
+            strToken = `"${token}"`;
+            if( i === tokens.length - 1 ){
+                functionBody += strToken;
+            } else{
+                functionBody += `${strToken} + `;
+            }
+        }
+    }
+
+    return functionBody;
+}
+
+let _format_12 = buildFormatter( "dddd-dddd-dddd" );
+let _format_13 = buildFormatter( "dddd-dddd-dddd-d" );
+let _format_14 = buildFormatter( "dddd-dddd-dddd-dd" );
+let _format_15 = buildFormatter( "dddd-dddd-dddd-ddd" );
+let _format_16 = buildFormatter( "dddd-dddd-dddd-dddd" );
+let _format_17 = buildFormatter( "dddd-dddd-dddd-dddd-d" );
+let _format_18 = buildFormatter( "dddd-dddd-dddd-dddd-dd" );
+let _format_19 = buildFormatter( "dddd-dddd-dddd-dddd-ddd" );
+
+
+let format = function ( arr ){
+    console.log( arr.length );
+    switch( arr.length ){
+        case 12:
+            return _format_12( arr );
+        case 13:
+            return _format_13( arr );
+        case 14:
+            return _format_14( arr );
+        case 15:
+            return _format_15( arr );
+        case 16:
+            return _format_16( arr );
+        case 17:
+            return _format_17( arr );
+        case 18:
+            return _format_18( arr );
+        case 19:
+            return _format_19( arr );
+    }
+};
 
 test(
     format,
@@ -138,9 +219,16 @@ function test ( func, tests, expectedResults ){
     if( tests.length !== expectedResults.length )
         throw new TypeError( "expectedResults must have the same length as tests" );
 
+    let success = true;
+
     for( let i = 0; i < tests.length; ++i ){
         let res = func( tests[i] );
-        if( res !== expectedResults[i] )
+        if( res !== expectedResults[i] ){
             console.log( `Failed test ${i + 1}, with the value of ${ tests[i] } with the expected value of ${ expectedResults[i] } actually returned ${res}` );
+            success = false;
+        }
     }
+
+    if( success )
+        console.log( "All the tests passed." );
 }
