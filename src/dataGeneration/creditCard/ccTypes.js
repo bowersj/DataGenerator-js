@@ -1,4 +1,5 @@
 module.exports = {
+    types:[ 'visa', 'mastercard', 'americanExpress', 'dinersClub', 'discover', 'jcb', 'unionpay', 'maestro', 'hipercard' ],
     visa:{
         niceType: 'Visa',
         type: 'visa',

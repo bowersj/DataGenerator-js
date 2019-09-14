@@ -10,6 +10,13 @@ module.exports.genCreditCardFunctionBody = genCreditCardFunctionBody;
 module.exports.buildFunction = buildFunction;
 module.exports.buildCreditCardFunctions = buildCreditCardFunctions;
 module.exports.filterArrayByArray = filterArrayByArray;
+module.exports.copy = copy;
+
+
+function copy( obj ){
+    return JSON.parse( JSON.stringify( obj ) );
+}
+
 
 function isOdd( int ){
     return int % 2 === 1
